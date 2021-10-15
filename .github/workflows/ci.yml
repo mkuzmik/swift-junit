@@ -10,22 +10,27 @@ on:
   release:
     types:
       - created
-  workflow_dispatch:
 
 jobs:
   build:
     name: Swift ${{ matrix.swift }} on ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [ubuntu-18.04, macos-11]
         swift: ["5.0", "5.1", "5.2"]
+
     runs-on: ${{ matrix.os }}
+
     steps:
       - uses: fwal/setup-swift@v1
         with:
           swift-version: ${{ matrix.swift }}
+
       - name: Get swift version
         run: swift --version
+
       - uses: actions/checkout@v2
+
       - name: Run tests
         run: swift test
